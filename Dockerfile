@@ -26,6 +26,8 @@ RUN apt-get -y update && apt-get install -y \
     cmake \
     unzip \
     liblua5.3-dev \
+    liblua5.1-json \
+    lua-ansicolors \
     zip \
     lsof wget vim sudo rsync cron mysql-client openssh-server supervisor locate mplayer valgrind certbot python-certbot-apache dnsutils tcpdump gstreamer1.0-tools
 
@@ -292,10 +294,6 @@ RUN autoreconf -fi
 RUN ./configure
 RUN make && make install
 
-# TODO: переместить вверх установку (там же где jit устанавливаем)
-RUN apt-get -y update && apt-get install -y \
-    liblua5.1-json
-
 RUN cd / && git clone https://github.com/meetecho/janus-gateway.git && cd /janus-gateway && \
     git checkout master && \
     sh autogen.sh &&  \
@@ -324,12 +322,7 @@ RUN cd / && git clone https://github.com/meetecho/janus-gateway.git && cd /janus
     --enable-all-handlers && \
     make && make install && make configs && ldconfig
 
-# TODO: переместить вверх установку (там же где jit устанавливаем)
-RUN apt-get -y update && apt-get install -y \
-    lua-ansicolors
-
 COPY nginx.conf /usr/local/nginx/nginx.conf
-
 
 ENV NVM_VERSION v0.35.3
 ENV NODE_VERSION v12.18.3
