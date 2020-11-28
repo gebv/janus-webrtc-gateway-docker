@@ -6,17 +6,27 @@ build:
 build-nocache:
 	@docker build --no-cache -t atyenoria/$(TEMPLATE_NAME) .
 
-bash: 
+bash:
 	@docker run --net=host -v /home/ubuntu:/ubuntu --name="janus" -it -t atyenoria/$(TEMPLATE_NAME) /bin/bash
 
-attach: 
+attach:
 	@docker exec -it janus /bin/bash
 
-run: 
+run:
 	@docker run --net=host --name="janus" -it -t atyenoria/$(TEMPLATE_NAME)
 
-run-mac: 
-	@docker run -p 80:80 -p 8088:8088 -p 8188:8188 --name="janus" -it -t atyenoria/$(TEMPLATE_NAME)
+run-mac:
+	@docker run \
+		-p 127.0.0.1:10080:80 \
+		-p 127.0.0.1:8088:8088 \
+		-p 127.0.0.1:8188:8188 \
+		-p 127.0.0.1:8189:8189 \
+		--name="janus" \
+		-v ${PWD}/janus:/usr/local/etc/janus \
+		-it \
+		-d \
+		-t \
+		atyenoria/$(TEMPLATE_NAME)
 
-run-hide: 
+run-hide:
 	@docker run --net=host --name="janus" -it -t atyenoria/$(TEMPLATE_NAME) >> /dev/null
