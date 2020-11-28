@@ -2,6 +2,7 @@ version: '2.4'
 services:
   ctrlhack-configure:
     image: atyenoria/janus-webrtc-gateway-docker
+    container_name: janus
     volumes:
       # custom files
       - ./customfiles/etc/janus/janus.transport.http.jcfg:/usr/local/etc/janus/janus.transport.http.jcfg:ro
