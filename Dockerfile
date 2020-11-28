@@ -25,6 +25,7 @@ RUN apt-get -y update && apt-get install -y \
     git \
     cmake \
     unzip \
+    liblua5.3-dev \
     zip \
     lsof wget vim sudo rsync cron mysql-client openssh-server supervisor locate mplayer valgrind certbot python-certbot-apache dnsutils tcpdump gstreamer1.0-tools
 
@@ -291,10 +292,12 @@ RUN autoreconf -fi
 RUN ./configure
 RUN make && make install
 
-
+# TODO: переместить вверх установку (там же где jit устанавливаем)
+RUN apt-get -y update && apt-get install -y \
+    liblua5.1-json
 
 RUN cd / && git clone https://github.com/meetecho/janus-gateway.git && cd /janus-gateway && \
-    git checkout refs/tags/v0.10.7 && \
+    git checkout master && \
     sh autogen.sh &&  \
     PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
     --enable-post-processing \
@@ -314,8 +317,16 @@ RUN cd / && git clone https://github.com/meetecho/janus-gateway.git && cd /janus
     --enable-turn-rest-api \
     --enable-plugin-audiobridge \
     --enable-plugin-nosip \
+    --enable-plugin-duktape \
+    --enable-plugin-lua \
+    --enable-plugin-streaming \
+    --enable-plugin-videoroom \
     --enable-all-handlers && \
     make && make install && make configs && ldconfig
+
+# TODO: переместить вверх установку (там же где jit устанавливаем)
+RUN apt-get -y update && apt-get install -y \
+    lua-ansicolors
 
 COPY nginx.conf /usr/local/nginx/nginx.conf
 
