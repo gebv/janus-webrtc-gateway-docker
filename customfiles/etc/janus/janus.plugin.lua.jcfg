@@ -10,11 +10,11 @@
 # script will need to rely on an XML configuration file in its initialization,
 # for instance, then set the 'config' property as the path to the file;
 # it will be passed, as is, to your script in the init() call. None of
-# the samples use this property, which is why it's commented out. 
+# the samples use this property, which is why it's commented out.
 
 general: {
 	path = "/usr/local/share/janus/lua"
-	script = "/usr/local/share/janus/lua/echotest.lua"
+	script = "/usr/local/share/janus/lua/videoroomx.lua"
 	#script = "/usr/local/share/janus/lua/videoroom.lua"
 	#config = "/path/to/configfile"
 }

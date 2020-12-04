@@ -4,12 +4,16 @@ services:
     image: atyenoria/janus-webrtc-gateway-docker
     container_name: janus
     volumes:
-      # custom files
+      # custom files cfg
       - ./customfiles/etc/janus/janus.transport.http.jcfg:/usr/local/etc/janus/janus.transport.http.jcfg:ro
       - ./customfiles/etc/janus/janus.plugin.duktape.jcfg:/usr/local/etc/janus/janus.plugin.duktape.jcfg:ro
       - ./customfiles/etc/janus/janus.plugin.lua.jcfg:/usr/local/etc/janus/janus.plugin.lua.jcfg:ro
       - ./customfiles/etc/janus/janus.plugin.streaming.jcfg:/usr/local/etc/janus/janus.plugin.streaming.jcfg:ro
-      - ./customfiles/etc/janus/janus.plugin.videoroom.jcfg:/usr/local/etc/janus/janus.plugin.videoroom.jcfg:ro
+      # - ./customfiles/etc/janus/janus.plugin.videoroom.jcfg:/usr/local/etc/janus/janus.plugin.videoroom.jcfg:ro
+      - ./customfiles/etc/janus/janus.plugin.videoroomx.jcfg:/usr/local/etc/janus/janus.plugin.videoroomx.jcfg:ro
+      # custom files lua
+      - ./customfiles/share/janus/lua/videoroomx.lua:/usr/local/share/janus/lua/videoroomx.lua:ro
+    # network_mode: host
     ports:
       - "127.0.0.1:10080:80"
       - "127.0.0.1:7088:7088"
